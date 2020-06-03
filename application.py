@@ -59,7 +59,7 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    return "Index: TODO"
+    return render_template('index.html')
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -127,6 +127,16 @@ def register():
             return redirect('/login')
     else:
         return render_template('register.html')
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
 
 @app.route("/new")
 @login_required
