@@ -22,7 +22,10 @@ db = scoped_session(sessionmaker(bind=engine))
 mydb = SQL(db)
 
 
-books = mydb.exec('select isbn, title, author, year from books')
+# books = mydb.exec('select isbn, title, author, year from books')
+books = db.execute('select isbn, title, author, year from books where title=:title',
+                   {"title": 'Steve Jobs'})
+print(books)
 for book in books:
     print(book['isbn'], book['title'], book['author'], book['year'])
 

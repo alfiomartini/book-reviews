@@ -14,7 +14,7 @@ function listeners(){
             var avail = JSON.parse(data);
             if (!avail) {
                 let modal = new Modal('');
-                modal.show('Name already in use.');
+                modal.show(`Name ${value} already in use.`);
                 input.value= '';
                 input.focus();
             }   
@@ -27,7 +27,7 @@ function listeners(){
         let conf = document.getElementById('conf');
         if (pass.value !== conf.value){
             let modal = new Modal('');
-            modal.show("New password and confirmation don't match");
+            modal.show("New password and confirmation do not match");
             pass.value= '';
             conf.value = '';
             pass.focus();
