@@ -1,0 +1,17 @@
+/* Global Settings */
+* {
+  box-sizing: border-box;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* Boostrap Forms */
+
+form{
+  width: 50%;
+  margin:auto;
+  text-align: center;
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" 
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script 
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer>
+        </script>
+        <!-- Popper JS -->
+        <script 
+             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" defer>
+        </script>
+        <!-- Latest compiled JavaScript -->
+        <script 
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer>
+        </script>
+    
+        <link href="{{url_for('static', filename='styles.css')}}" rel="stylesheet">
+         
+        <!-- local scripts -->
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-md  navbar-dark bg-dark border m-3">
+            <a class="navbar-brand" href="/">GReads</a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" 
+                 class="navbar-toggler" data-target="#navbar" data-toggle="collapse" 
+                 type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if session.user_id %}
+                    <form class="form-inline " method='GET' action='' id="form-search"> 
+                        <input autocomplete="off" autofocus placeholder="Search" 
+                        class = "form-control mr-sm-2 mt-2" type="text" name="bookmark" 
+                        id = 'search-input' required>
+                        <!--
+                        <button type="submit" class="btn btn-primary  mr-sm-2 mt-2" 
+                        onclick="return false;"> 
+                        Search
+                        </button> -->
+                        <!-- return false here is essential, because  after execution of the event handler,
+                        i.e. of evalForm, the default behaviour of refreshing the page, takes place
+                        returning false simply says to the browser that the button has not been clicked -->
+                    </form>
+                    <ul class="navbar-nav mr-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('new')}}"
+                            data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
+                            New</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('edit')}}" 
+                            data-toggle='tooltip' title="Edit Bookmarks" 
+                            data-placement='bottom'>Edit</a></li>
+                        <li class = "nav-item "> 
+                            <a  class="nav-link dropdown-toggle"  href="{{url_for('remove')}}"
+                                data-toggle="tooltip" title="Remove Reviews"
+                                data-placement='bottom'>Remove</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('password')}}"
+                            data-toggle='tooltip' title="Change Password" 
+                            data-placement='bottom'>Password</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                    </ul>
+                    <script src="/static/tooltip_init.js" defer></script>
+                    <script src="/static/search.js" defer></script> 
+                {% else %}
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% if get_flashed_messages() %}
+            <header class="flashed">
+                <div class="alert alert-primary border text-center m-3" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+        <main class="container p-5" id="main">
+            <div id="modal-div"></div>
+            <div id="search"></div>
+            {% block main %}{% endblock %}
+            {% block scripts %}{% endblock %}
+        </main>
+    </body>
+
+</html>

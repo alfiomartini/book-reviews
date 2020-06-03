@@ -1,0 +1,5 @@
+passwords.txt
+experiments/
+__pycache__/
+flask_session/
+.pylintrc
