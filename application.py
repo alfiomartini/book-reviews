@@ -61,9 +61,41 @@ def after_request(response):
 def index():
     return "Index: TODO"
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    return "Login: TODO"
+    """Log user in"""
+    # Forget any user_id
+    session.clear()
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        # Ensure username was submitted 
+        name = request.form.get("username")
+        if not name:
+            return apology("You must provide a username.")
+        # Ensure password was submitted
+        password = request.form.get("password")
+        if not password:
+            return apology("You must provide a password.")
+        # Query database for username
+        row = db.execute("SELECT * FROM users WHERE name = :name",
+                          {"name": name}).fetchone()
+        # Ensure username exists and password is correct
+        if (row is None) or (not check_password_hash(row["password"], password)):
+            return apology("Invalid username and/or password")
+        print('username: ', row['name'])
+        # Remember which user has logged in
+        session["user_id"] = row["id"]
+        # set user_id in the database
+        # db.set_userid(session['user_id'])
+
+        # Redirect user to home page
+        flash('You are now logged in')
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("login.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
