@@ -158,10 +158,10 @@ def remove():
 def password():
     return "Change Password: TODO"
 
-@app.route('/books')
+@app.route('/books/<string:isbn>', methods=["GET"])
 @login_required
-def books():
-    return "Book Info: TODO"
+def books(isbn):
+    return f'Book {isbn} Info: TODO';
 
 
 # Utility Routes

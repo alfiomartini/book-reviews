@@ -15,6 +15,19 @@ body{
   }
 }
 
+/* Stycky Elements: Navbar and Flashed Container */
+
+.navbar{
+  position: sticky;
+  top: 5px;
+}
+
+.flashed{
+  position: sticky;
+  top: 5em;
+  /* z-index: -1; */
+}
+
 /* Forms in register.html and login.html */
 
 .form-boot{
@@ -41,6 +54,22 @@ body{
   padding: 1px 6px;
   color: lightgray;
   width: 23rem;
+}
+
+/* Smaller smartphones  */
+@media (max-width:414px){
+  .books li a {
+    width:18rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Iphone 5 */
+@media (max-width:320px){
+  .books li a {
+    width:17rem;
+    font-size: 0.9rem;
+  }
 }
 
 .books li a:hover{
