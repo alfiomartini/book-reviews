@@ -195,13 +195,13 @@ def search(term):
     
     if year:
         sql_search = '''select  isbn, title, author, year from books 
-                            where  isbn like :term or title like lower(:term) or 
-                            author like lower(:term) or year = :year 
+                            where  isbn like :term or lower(title) like :term or 
+                            lower(author) like :term or year = :year 
                             order by title'''
     else:
         sql_search = '''select  isbn, title, author, year from books 
-                            where  isbn like :term or title like lower(:term) or 
-                            author like lower(:term)
+                            where  isbn like :term or lower(title) like :term or 
+                            lower(author) like :term
                             order by title'''
     books = db.execute(sql_search, {"term":term, "year":year}).fetchall()
     if books:
