@@ -1,0 +1,14 @@
+<div class="d-flex flex-wrap justify-content-around">
+  <div class="book-item mb-3 mr-2 border border-light">
+      <ul class='books m-2'>
+          {% for book in books %}
+              {% set book_info = book['title'] + ' : ' + book['author']%}
+              <li><a href="{{url_for('books')}}" data-toggle='tooltip'
+                  title="{{book['tooltip']}}" data-placement='right'
+                  data-html='true'>
+                  {{book_info}}</a>
+              </li>
+          {% endfor %}
+      </ul>
+  </div> <!-- end bookitem -->
+</div> <!-- end flexbox-->

@@ -158,6 +158,11 @@ def remove():
 def password():
     return "Change Password: TODO"
 
+@app.route('/books')
+@login_required
+def books():
+    return "Book Info: TODO"
+
 
 # Utility Routes
 
@@ -176,6 +181,51 @@ def check():
     print('Available', avail)
     return isAvail
 
+@app.route('/search/<string:term>', methods=['GET'])
+@login_required
+def search(term):
+    term = term.lower()
+
+    try:
+        year = int(term)
+    except:
+        year = None;
+
+    term = "%" + term + "%" 
+    
+    if year:
+        sql_search = '''select  isbn, title, author, year from books 
+                            where  isbn like :term or title like lower(:term) or 
+                            author like lower(:term) or year = :year 
+                            order by title'''
+    else:
+        sql_search = '''select  isbn, title, author, year from books 
+                            where  isbn like :term or title like lower(:term) or 
+                            author like lower(:term)
+                            order by title'''
+    books = db.execute(sql_search, {"term":term, "year":year}).fetchall()
+    if books:
+        books_dict = []
+        for book in books:
+            # print(book['isbn'], book['title'], book['author'], book['year'])
+            # https://stackoverflow.com/questions/10588375/can-i-assign-values-in-rowproxy-using-the-sqlalchemy
+            book_dict = dict(book.items())
+            # print(book_dict)
+            # book_dict['tooltip'] = '<em><u>ISBN</u></em> : ' + book['isbn']\
+            #                     + '\n' + '<em><u>Title</u></em> : ' + book['title']\
+            #                     + '\n' + '<em><u>Author</u></em> : ' + book['author']\
+            #                     + '\n' + '<em><u>Year</u></em>: ' + str(book['year'])
+            #print(book['isbn'], book['title'], book['author'], book['year'])
+            book_dict['tooltip'] = 'ISBN: ' + book['isbn']\
+                                + '\n' + 'Title : ' + book['title']\
+                                + '\n' + 'Author : ' + book['author']\
+                                + '\n' + 'Year: ' + str(book['year'])
+            books_dict.append(book_dict)
+        html = render_template('search.html', books = books_dict)
+        #print(html)
+        return html
+    else:
+        return ""
 
 if __name__ == '__main__':
     app.run(debug=True)

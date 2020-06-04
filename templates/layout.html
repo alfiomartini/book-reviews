@@ -22,9 +22,10 @@
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer>
         </script>
     
-        <link href="{{url_for('static', filename='styles.css')}}" rel="stylesheet">
-         
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+ 
         <!-- local scripts -->
+        <link href="{{url_for('static', filename='styles.css')}}" rel="stylesheet">
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
@@ -53,13 +54,13 @@
                     </form>
                     <ul class="navbar-nav mr-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="{{url_for('new')}}"
-                            data-toggle='tooltip' title="New Bookmark" data-placement='bottom'>
+                            data-toggle='tooltip' title="New Review" data-placement='bottom'>
                             New</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{url_for('edit')}}" 
-                            data-toggle='tooltip' title="Edit Bookmarks" 
+                            data-toggle='tooltip' title="Edit Reviews" 
                             data-placement='bottom'>Edit</a></li>
                         <li class = "nav-item "> 
-                            <a  class="nav-link dropdown-toggle"  href="{{url_for('remove')}}"
+                            <a  class="nav-link"  href="{{url_for('remove')}}"
                                 data-toggle="tooltip" title="Remove Reviews"
                                 data-placement='bottom'>Remove</a>
                         </li>
