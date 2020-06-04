@@ -225,7 +225,8 @@ def search(term):
         #print(html)
         return html
     else:
-        return ""
+        message ='No books were found.'
+        return render_template('empty_search.html', message=message)
 
 if __name__ == '__main__':
     app.run(debug=True)
