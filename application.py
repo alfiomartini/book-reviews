@@ -145,7 +145,7 @@ def new():
 
 @app.route("/add")
 @login_required
-def new():
+def add():
     return "Add Book: TODO"
 
 @app.route("/edit")

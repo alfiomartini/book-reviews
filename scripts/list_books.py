@@ -7,6 +7,7 @@ if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATABASE_URL is not set")
 
 # Set up database
+# this is not the correct way. Have to get it better
 class SQL:
     def __init__(self,db):
         self.db = db 
@@ -25,7 +26,7 @@ mydb = SQL(db)
 # books = mydb.exec('select isbn, title, author, year from books')
 books = db.execute('select isbn, title, author, year from books where title=:title',
                    {"title": 'Steve Jobs'})
-print(books)
+# print(books)
 for book in books:
     print(book['isbn'], book['title'], book['author'], book['year'])
 

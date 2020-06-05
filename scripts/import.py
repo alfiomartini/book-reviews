@@ -7,14 +7,9 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATABASE_URL is not set")
 
-# Set up database
-class SQL:
-    engine = create_engine(os.getenv("DATABASE_URL"))
-    def __init__(self):
-        scoped_session(sessionmaker(bind=SQL.engine))
-#engine = create_engine(os.getenv("DATABASE_URL"))
-#db = scoped_session(sessionmaker(bind=engine))
-db = SQL()
+ 
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
 
 # open csv file and insert data into table books:
 
