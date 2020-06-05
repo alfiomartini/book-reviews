@@ -1,5 +1,5 @@
 import os
-from helpers import apology, login_required, shorten_title
+from helpers import apology, login_required, shorten_title, api_book
 from flask import Flask, session, url_for, redirect, flash
 from flask import render_template, request, jsonify
 from flask_session import Session
@@ -143,6 +143,11 @@ def logout():
 def new():
     return "New Review: TODO"
 
+@app.route("/add")
+@login_required
+def new():
+    return "Add Book: TODO"
+
 @app.route("/edit")
 @login_required
 def edit():
@@ -161,7 +166,14 @@ def password():
 @app.route('/books/<string:isbn>', methods=["GET"])
 @login_required
 def books(isbn):
-    return f'Book {isbn} Info: TODO';
+    # query database to get book data
+    book = db.execute('select * from books where isbn = :isbn', {"isbn":isbn}).fetchone()
+    #print(book['isbn'], book['title'], book['author'], book['year'])
+    # query goodreads api for average rating and number of ratings
+    book_data = api_book(book, isbn)
+    print(book_data)
+    return render_template('book_info.html', book=book_data)
+    # display info ('book_info.html')
 
 
 # Utility Routes
@@ -176,9 +188,9 @@ def check():
         avail = True
     else:
         avail = False
-        print('register row', row['id'], row['name'])
+        #print('register row', row['id'], row['name'])
     isAvail =  jsonify(avail)
-    print('Available', avail)
+    #print('Available', avail)
     return isAvail
 
 @app.route('/search/<string:term>', methods=['GET'])
@@ -226,7 +238,7 @@ def search(term):
         return html
     else:
         message ='No books were found.'
-        return render_template('empty_search.html', message=message)
+        return render_template('empty.html', message=message)
 
 if __name__ == '__main__':
     app.run(debug=True)

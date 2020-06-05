@@ -76,3 +76,45 @@ body{
   color:black;
   background-color: whitesmoke;
 }
+
+/* book-info.html */
+
+.book-container{
+  width:60%;
+  margin: auto;
+}
+
+.book-container table th{
+  width: 40%;
+  font-weight: normal;
+}
+
+.book-container table td{
+  text-align: right;
+  width: 60%
+}
+
+/* Utilities */
+
+.btn{
+  display: inline-block;
+  padding: 8px 30px;
+  color: #f4f4f4;
+  background-color: navy;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn:hover{
+  background-color: #f4f4f4;
+  color: navy;
+}
+
+.center-x{
+  /* https://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/ */
+  position: fixed;
+  left:50%;
+  transform: translateX(-50%);
+}

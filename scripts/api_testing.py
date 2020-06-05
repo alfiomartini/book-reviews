@@ -18,13 +18,16 @@ if not os.getenv("DATABASE_URL"):
 # test api
 
 resp = requests.get("https://www.goodreads.com/book/review_counts.json",
-     params={"key": GOODREADS_KEY, "isbns": "9781632168146"})
+     params={"key": GOODREADS_KEY, "isbns": "0743474155"})
 print(resp)
 print('----------------------------------------------------------------')
-print(resp.text)
+print(resp.text) #json text
 print('----------------------------------------------------------------')
 # json decoder: json -> python object
-jsonObj = resp.json()
+jsonObj = resp.json() #js object
 print(jsonObj)
 print('----------------------------------------------------------------')
 print(jsonObj['books'])
+print(jsonObj['books'][0])
+print(jsonObj['books'][0]['work_ratings_count'])
+print(jsonObj['books'][0]['average_rating'])
