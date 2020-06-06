@@ -18,8 +18,8 @@ def api_book(book, isbn):
         book_dict['good_avg'] = resp_obj['books'][0]['average_rating']
     except:
         book_dict = dict(book.items())
-        book_dict['good_reviews'] = 0
-        book_dict['good_avg'] = 0
+        # book_dict['good_reviews'] = 0
+        # book_dict['good_avg'] = 0
     
     return book_dict
     

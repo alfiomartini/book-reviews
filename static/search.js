@@ -12,7 +12,6 @@ function listeners(){
     input.addEventListener('change', search_get);
     input.addEventListener('paste', search_get);
    
-
     function searchEvents(){
         let input = document.querySelector('input');
         let term = input.value;
@@ -20,7 +19,7 @@ function listeners(){
         term = term.trim();
         if (term){
             $.ajax({
-            url: 'search/' + term,
+            url: '/search/' + term,
             method: 'get',
             async: true, // notice this line
             })

@@ -138,19 +138,15 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
-@app.route("/new")
-@login_required
-def new():
-    return "New Review: TODO"
-
-@app.route("/add")
-@login_required
-def add():
-    return "Add Book: TODO"
-
 @app.route("/edit")
 @login_required
 def edit():
+    # message for user to type in the search box:
+    # present a list of books
+    # after selection go for edit/isbn and show
+    # book data just in case this book hasn't a review for
+    # this user. 
+    # The user should type the review in a text area (edit.html)
     return "Edit: TODO"
 
 @app.route("/remove")
@@ -161,7 +157,27 @@ def remove():
 @app.route("/password")
 @login_required
 def password():
-    return "Change Password: TODO"
+    if request.method == 'POST':
+        # access post parameters
+        old = request.form.get('oldpassword')
+        new = request.form.get('newpassword')
+        conf = request.form.get('confirmation')
+        # see if new and confirmation password match
+        if new != conf:
+            return apology("New passord and confirmation do not match.")
+        # query database to access user data
+        row = db.execute("select * from users where id = :id", 
+                        {"id":session['user_id']}).fetchone()
+        oldhash = row['password']
+        if not check_password_hash(oldhash, old):
+            return apology('Current password is wrong.')
+        newhash = generate_password_hash(new)
+        # update database with new user password 
+        db.execute('update users set password = :newhash id = :id', 
+                {"newhash": newhash, "id": session['user_id']})
+        return redirect('/logout')
+    else:
+        return render_template('password.html')
 
 @app.route('/books/<string:isbn>', methods=["GET"])
 @login_required
@@ -171,8 +187,22 @@ def books(isbn):
     #print(book['isbn'], book['title'], book['author'], book['year'])
     # query goodreads api for average rating and number of ratings
     book_data = api_book(book, isbn)
-    print(book_data)
-    return render_template('book_info.html', book=book_data)
+    # print(book_data)
+    reviews = db.execute('''select name, review, rating from  users, reviews 
+                            where isbn_id=:isbn and id=user_id''',
+                         {"isbn":isbn}).fetchall()
+    # print(reviews)
+    rack_data = {}
+    if reviews:
+        counter = 0;
+        sum = 0;
+        for review in reviews:
+            counter += 1
+            sum += review['rating']
+        avg = sum / counter
+        rack_data['rack_avg'] = f'{avg:.2f}'
+        rack_data['rack_reviews'] = counter
+    return render_template('book_info.html', book=book_data, reviews=reviews, rack=rack_data)
     # display info ('book_info.html')
 
 

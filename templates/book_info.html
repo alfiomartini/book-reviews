@@ -5,20 +5,71 @@
 {% endblock %}
 
 {% block main %}
-<div class="book-container">
-  <table class="table table-dark table-hover table-responsive">
-    <tbody>
-      <tr><th> Title</th> <td>{{book['title']}}</td></tr>
-      <tr><th> Author</th> <td>{{book['author']}}</td></tr>
-      <tr><th> Year</th> <td>{{book['year']}}</td></tr>
-      <tr><th> ISBN</th> <td>{{book['isbn']}}</td></tr>
-      <tr><th> Reviews (Goodreads)</th> <td>{{book['good_reviews']}}</td></tr>
-      <tr><th> Average Score (Goodreads) </th> <td>{{book['good_avg']}}</td></tr>
-    </tbody>
-  </table>
-</div>
-<a href="/" class="btn center-x">Clear</a>
+<div class="info-container">
+  <div class="book-container border border-light">
+    <ul>
+      <li><span class="book-item">Title:</span> 
+          <span class="book-data">{{book['title']}}</span>
+      </li>
+      <li><span class="book-item">Author:</span> 
+           <span class="book-data">{{book['author']}}</span>
+      </li>
+      <li><span class="book-item">Year:</span> 
+          <span class="book-data">{{book['year']}}</span>
+      </li>
+      <li><span class="book-item">ISBN:</span> 
+          <span class="book-data">{{book['isbn']}}</span>
+      </li>
+      {% if book['good_reviews'] %}
+        <li><span class="book-item">Reviews (Goodreads):</span> 
+            <span class="book-data">{{book['good_reviews']}}</span>
+        </li>
+      {% endif %}
+      {% if book['good_avg'] %}
+       <li> <span class="book-item">Average Score (Goodreads):</span> 
+            <span class="book-data">{{book['good_avg']}}</span>
+      </li>
+      {% endif %}
+      {% if rack['rack_reviews'] %}
+        <li><span class="book-item">Reviews (BookRack):</span> 
+            <span class="book-data">{{rack['rack_reviews']}}</span>
+        </li>
+      {% endif %}
+      {% if rack['rack_avg'] %}
+       <li> <span class="book-item">Average Score (BookRack):</span> 
+            <span class="book-data">{{rack['rack_avg']}}</span>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  <!-- <a href="/" class="butt center-x">Clear</a> -->
+  {% if reviews %}
+    <div class="reviews-container border border-light">
+      {% for review in reviews %}
+      <ul>
+        <li>
+          <span class="review-item">User:</span>
+          <span class="review-name">{{review['name']}}</span>
+        </li>
+        <li>
+          <span class="review-item">Rating:</span>
+          <span class="review-rate">{{review['rating']}}<span>
+        </li>
+        <li>
+          <span class="review-item">Review:</span>
+          <span class="review-text">{{review['review']}}</span>
+        </li>
+      </ul>
+      {% endfor %}
+    </div> <!-- reviews-container -->
+  {% else %}
+    <div class="alert alert-primary border text-center" role="alert">
+      No reviews found in BookRack
+    </div>
+  {% endif %}
+</div> <!-- info-container -->
 
 {% endblock %}
 {% block scripts %}
+<script src="/static/book_clean.js"></script>
 {% endblock %}
