@@ -5,8 +5,7 @@ import urllib.parse
 from flask import redirect, render_template, request, session
 from functools import wraps
 import requests
-
-
+        
 def api_book(book, isbn):
     GOODREADS_KEY = 'wKy3eEHxspfhDj5YJ5POHw'
     try:

@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Reviews
+{% endblock %}
+
+{% block main %}
+<div class="d-flex flex-wrap justify-content-around" id="book-list">
+  <div class="mr-2 border border-light">
+      <ul class='books m-2'>
+          {% for book in books %}
+              {% set book_info = book['title'] + ' : ' + book['author']%}
+              <li><a href="javascript:" data-toggle='tooltip'
+                  title="{{book['tooltip']}}" data-placement='right'
+                  data-html='true' data-rating = "{{book['rating']}}"
+                  data-review = "{{book['review']}}" data-isbn="{{book['isbn']}}"
+                  data-title = "{{book['title']}}" data-author="{{book['author']}}"
+                  data-year = "{{book['year']}}" onclick="edit(this)">
+                  {{book_info}}</a>
+              </li>
+          {% endfor %}
+      </ul>
+  </div> <!-- end bookitem -->
+</div> <!-- end flexbox-->
+
+<div class="edit-container hide-block">
+  <div class="book-container border border-light">
+    <ul>
+      <li><span class="book-item">Title:</span> 
+          <span class="book-data"></span>
+      </li>
+      <li><span class="book-item">Author:</span> 
+           <span class="book-data"></span>
+      </li>
+      <li><span class="book-item">Year:</span> 
+          <span class="book-data"></span>
+      </li>
+      <li><span class="book-item">ISBN:</span> 
+          <span class="book-data"></span>
+      </li>
+    </ul>
+  </div>
+</div>
+<form class="form-boot mt-3 hide-block" id="form-add-review" 
+    action="/edit_review" method="post">
+    <div class="form-group">
+        <label for="rating"> Rating </label>
+        <input class="form-control" name="rating" placeholder="Rating (1-5)" 
+        type="number" value=""  min="1" max="5" id="rating">
+    </div>
+    <div class="form-group">
+      <label for="review">Review</label>
+      <textarea class="form-control" rows="10"  name='review' 
+        placeholder = "" value="" minlength=10 id="review"></textarea>
+    </div>
+    <input class = "btn btn-primary" type="submit" value="Submit">
+    <input type="text" name = "isbn" value="" hidden>
+</form>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/edit.js"></script>
+{% endblock %}

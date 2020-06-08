@@ -15,6 +15,5 @@ function listeners(){
     input.removeEventListener('change', search_clean);
     input.removeEventListener('keyup', search_clean);
     input.removeEventListener('paste', search_clean);
-}
-
+  }
 }

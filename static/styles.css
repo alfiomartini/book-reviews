@@ -36,6 +36,12 @@ body{
   text-align: center;
 }
 
+.form-group label{
+  color:lightsteelblue;
+  display: block;
+  text-align: left;
+}
+
 /* search.html */
 
 .books{
@@ -79,7 +85,7 @@ body{
 
 /* book-info.html */
 
-.info-container{
+.info-container {
   font-family: 'Nanum Gothic', sans-serif;
   width:70%;
   margin:auto;
@@ -120,7 +126,29 @@ body{
   text-align: justify;
 }
 
+.hide-form{
+  display: none;
+}
+
+.show-form{
+  display: block;
+}
+
+/* Edit.html */
+
+.edit-container{
+  width:50%;
+  margin:auto;
+}
 /* Utilities */
+
+.hide-block{
+  display: none;
+}
+
+.show-block{
+  display: block;
+}
 
 .butt{
   display: inline-block;
@@ -144,3 +172,11 @@ body{
   left:50%;
   transform: translateX(-50%);
 }
+
+/* Tooltips */
+
+.tooltip-inner{
+  font-size: 14px;
+  white-space: pre-wrap;
+  text-align: justify;
+} 

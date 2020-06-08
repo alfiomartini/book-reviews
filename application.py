@@ -1,5 +1,6 @@
 import os
-from helpers import apology, login_required, shorten_title, api_book
+from helpers import apology, login_required, shorten_title
+from helpers import api_book
 from flask import Flask, session, url_for, redirect, flash
 from flask import render_template, request, jsonify
 from flask_session import Session
@@ -18,23 +19,36 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Extends basic database setup
-class SQL:
-    def __init__(self,db):
-        self.db = db 
-    
-    def exec(self,query, params=None):
-        _db = self.db
-        if params:
-            rows = _db.execute(query, params)
-        else:
-            rows = _db.execute(query)
-        return rows
-
 # set up database s
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
-# mydb = SQL(db)
+
+def search_reviews():
+    user_reviews = {}
+    books_list = []
+    books = db.execute('''select name, isbn, title, author,year, review, rating 
+                        from users, books, reviews
+                        where users.id=reviews.user_id and reviews.isbn_id = 
+                        books.isbn and  users.id=:user_id''',
+                        {"user_id":session['user_id']}).fetchall()
+    if books:
+        for book in books:
+            book_dict = dict(book.items())
+            print(book['isbn'])
+            book_dict['tooltip'] = 'ISBN: ' + book['isbn'] \
+                                + '\n' + "Title : " + book['title']\
+                                + '\n' + 'Author : ' + book['author']\
+                                + '\n' + 'Year : ' + str(book['year'])\
+                                + '\n' + 'Rating : ' + str(book['rating'])\
+                                # + '\n' + 'Review : ' + book['review']
+            books_list.append(book_dict)
+        user_reviews['found'] = True
+        user_reviews['books'] = books_list
+    else:
+        user_reviews['books'] = books
+        user_reviews['found'] = False
+
+    return user_reviews
 
 # Ensure responses aren't cached
 # hard refresh: ctrl+f5 (Windows), ctrl+shift+r(Linux, Mac)
@@ -141,13 +155,28 @@ def logout():
 @app.route("/edit")
 @login_required
 def edit():
-    # message for user to type in the search box:
-    # present a list of books
-    # after selection go for edit/isbn and show
-    # book data just in case this book hasn't a review for
-    # this user. 
-    # The user should type the review in a text area (edit.html)
-    return "Edit: TODO"
+    user_reviews = search_reviews()
+    if user_reviews['found']:
+        flash('Select one of the books to edit your review.')
+        return render_template('edit.html', books=user_reviews['books'])
+    else:
+        message = 'No book reviews found for this user.'
+        return render_template('empty.html', message=message)
+
+@app.route("/edit_review", methods=['POST'])
+@login_required
+def edit_review():
+    rating = request.form.get('rating')
+    review = request.form.get('review')
+    isbn = request.form.get('isbn')
+    user_id = session['user_id']
+    db.execute('''update reviews set review=:review, rating=:rating
+                  where user_id =:user_id and isbn_id =:isbn_id''',
+                  {"review": review, "rating": rating, 
+                  "isbn_id":isbn, "user_id":user_id})
+    db.commit()
+    flash(f'Review and rating for book with isbn : {isbn} updated.')
+    return redirect('/')
 
 @app.route("/remove")
 @login_required
@@ -208,6 +237,18 @@ def books(isbn):
 
 # Utility Routes
 
+@app.route('/add/<string:isbn>', methods=['POST'])
+def add(isbn):
+    rating = int(request.form.get('rating'))
+    review = request.form.get('review')
+    db.execute('''insert into reviews(isbn_id,user_id,review,rating)
+                  values(:isbn,:user_id,:review,:rating)''',
+                  {"isbn":isbn,"user_id":session['user_id'],
+                   "review":review,"rating":rating})
+    db.commit()
+    flash(f'Added review for book with isbn {isbn}')
+    return redirect('/')
+
 @app.route("/check", methods=["GET"])
 def check():
     """Return true if username available, else false, in JSON format"""
@@ -247,9 +288,8 @@ def search(term):
                             order by title'''
     books = db.execute(sql_search, {"term":term, "year":year}).fetchall()
     if books:
-        books_dict = []
+        books_list = []
         for book in books:
-            # print(book['isbn'], book['title'], book['author'], book['year'])
             # https://stackoverflow.com/questions/10588375/can-i-assign-values-in-rowproxy-using-the-sqlalchemy
             book_dict = dict(book.items())
             # print(book_dict)
@@ -257,13 +297,12 @@ def search(term):
             #                     + '\n' + '<em><u>Title</u></em> : ' + book['title']\
             #                     + '\n' + '<em><u>Author</u></em> : ' + book['author']\
             #                     + '\n' + '<em><u>Year</u></em>: ' + str(book['year'])
-            #print(book['isbn'], book['title'], book['author'], book['year'])
             book_dict['tooltip'] = 'ISBN: ' + book['isbn']\
                                 + '\n' + 'Title : ' + book['title']\
                                 + '\n' + 'Author : ' + book['author']\
                                 + '\n' + 'Year: ' + str(book['year'])
-            books_dict.append(book_dict)
-        html = render_template('search.html', books = books_dict)
+            books_list.append(book_dict)
+        html = render_template('search.html', books = books_list)
         #print(html)
         return html
     else:
