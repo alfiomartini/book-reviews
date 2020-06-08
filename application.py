@@ -103,7 +103,7 @@ def login():
         # db.set_userid(session['user_id'])
 
         # Redirect user to home page
-        flash('You are now logged in')
+        flash(f'User {name} now logged in')
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -168,20 +168,40 @@ def edit():
 def edit_review():
     rating = request.form.get('rating')
     review = request.form.get('review')
-    isbn = request.form.get('isbn')
+    isbn_id = request.form.get('isbn')
     user_id = session['user_id']
     db.execute('''update reviews set review=:review, rating=:rating
                   where user_id =:user_id and isbn_id =:isbn_id''',
                   {"review": review, "rating": rating, 
-                  "isbn_id":isbn, "user_id":user_id})
+                  "isbn_id":isbn_id, "user_id":user_id})
     db.commit()
     flash(f'Review and rating for book with isbn : {isbn} updated.')
     return redirect('/')
 
+
 @app.route("/remove")
 @login_required
 def remove():
-    return "Remove: TODO"
+    user_reviews = search_reviews()
+    if user_reviews['found']:
+        flash('Select one of the books to delete your review.')
+        return render_template('remove.html', books=user_reviews['books'])
+    else:
+        message = 'No book reviews found for this user.'
+        return render_template('empty.html', message=message)
+
+
+@app.route("/remove_review", methods=['POST'])
+@login_required
+def remove_review():
+    isbn_id = request.form.get('isbn')
+    user_id = session['user_id']
+    db.execute('''delete from reviews 
+                  where user_id =:user_id and isbn_id =:isbn_id''',
+                  {"isbn_id":isbn_id, "user_id":user_id})
+    db.commit()
+    flash(f'Review and rating for book with isbn : {isbn_id} removed.')
+    return redirect('/')
 
 @app.route("/password")
 @login_required
