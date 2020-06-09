@@ -4,7 +4,6 @@ function listeners(){
    
   let  add_review = document.getElementById('add-review');
   let  has_review = add_review.getAttribute('data-has-review');
-  // console.log(has_review);
   if (has_review == 'no'){
     add_review.classList.remove('hide-block');
     add_review.classList.add('show-block');

@@ -43,6 +43,27 @@
     </ul>
   </div>
   <!-- <a href="/" class="butt center-x">Clear</a> -->
+</div> <!-- info-container -->
+
+<button  id="add-review" class="btn btn-primary center-x mt-3 mb-3 hide-block"
+    data-has-review="{{this_has_review}}">Add Review
+</button>
+<div class="rev-add-container">
+  <form class="form-boot hide-form" id="form-add-review" 
+    action="{{url_for('add', isbn=book['isbn'])}}" method="post">
+    <div class="form-group">
+        <input class="form-control" name="rating" placeholder="Rating (1-5)" 
+        type="number" value=""  min="1" max="5">
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" rows="10"  name='review' 
+        placeholder = "Type your review (at least 10 chars)" 
+        minlength=10 ></textarea>
+    </div>
+    <input  class = "btn btn-primary mb-3" type="submit" value="Submit">
+  </form>
+</div>
+
   {% if reviews %}
     <div class="reviews-container border border-light">
       {% for review in reviews %}
@@ -67,26 +88,6 @@
       No reviews found in BookRack
     </div>
   {% endif %}
-</div> <!-- info-container -->
-<button  id="add-review" class="btn btn-primary center-x mt-3 mb-3 hide-block"
-    data-has-review="{{this_has_review}}">Add Review
-</button>
-<div class="rev-add-container">
-  <form class="form-boot hide-form" id="form-add-review" 
-    action="{{url_for('add', isbn=book['isbn'])}}" method="post">
-    <div class="form-group">
-        <input class="form-control" name="rating" placeholder="Rating (1-5)" 
-        type="number" value=""  min="1" max="5">
-    </div>
-    <div class="form-group">
-        <textarea class="form-control" rows="10"  name='review' 
-        placeholder = "Type your review (at least 10 chars)" 
-        minlength=10 ></textarea>
-    </div>
-    <input  class = "btn btn-primary" type="submit" value="Submit">
-  </form>
-</div>
-
 {% endblock %}
 {% block scripts %}
 <script src="/static/book_clean.js"></script>
