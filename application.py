@@ -2,7 +2,7 @@ import os
 from helpers import apology, login_required, shorten_title
 from helpers import api_book
 from flask import Flask, session, url_for, redirect, flash
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, abort
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import create_engine
@@ -22,6 +22,14 @@ Session(app)
 # set up database s
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
+
+def check_user(reviews):
+    print(session['username'])
+    for review in reviews:
+        print(review['name'])
+        if review['name'] == session['username']:
+            return 'yes'
+    return 'no'
 
 def search_reviews():
     user_reviews = {}
@@ -96,12 +104,12 @@ def login():
         # Ensure username exists and password is correct
         if (row is None) or (not check_password_hash(row["password"], password)):
             return apology("Invalid username and/or password")
-        print('username: ', row['name'])
+        # print('username: ', row['name'])
+
         # Remember which user has logged in
         session["user_id"] = row["id"]
-        # set user_id in the database
-        # db.set_userid(session['user_id'])
-
+        session['username'] = row['name']
+         
         # Redirect user to home page
         flash(f'User {name} now logged in')
         return redirect("/")
@@ -233,15 +241,20 @@ def password():
 def books(isbn):
     # query database to get book data
     book = db.execute('select * from books where isbn = :isbn', {"isbn":isbn}).fetchone()
-    #print(book['isbn'], book['title'], book['author'], book['year'])
+     
     # query goodreads api for average rating and number of ratings
     book_data = api_book(book, isbn)
-    # print(book_data)
-    reviews = db.execute('''select name, review, rating from  users, reviews 
-                            where isbn_id=:isbn and id=user_id''',
-                         {"isbn":isbn}).fetchall()
+    reviews = db.execute('''select name, review, rating from 
+                            users 
+                              join 
+                            (select user_id, isbn_id, review, rating 
+                             from reviews where isbn_id=:isbn) 
+                             as isbn_reviews
+                             on id = isbn_reviews.user_id;''',
+                             {"isbn":isbn}).fetchall()
     # print(reviews)
     rack_data = {}
+    this_has_review = check_user(reviews);
     if reviews:
         counter = 0;
         sum = 0;
@@ -251,11 +264,39 @@ def books(isbn):
         avg = sum / counter
         rack_data['rack_avg'] = f'{avg:.2f}'
         rack_data['rack_reviews'] = counter
-    return render_template('book_info.html', book=book_data, reviews=reviews, rack=rack_data)
-    # display info ('book_info.html')
+    return render_template('book_info.html', book=book_data, reviews=reviews, 
+                            rack=rack_data, this_has_review=this_has_review)
 
 
 # Utility Routes
+
+@app.route('/api/<string:isbn>', methods=['GET'])
+def api(isbn):
+    # query database to get book data
+    book = db.execute('select * from books where isbn = :isbn', {"isbn":isbn}).fetchone()
+    if book:
+        # print(book_data)
+        book_api = dict(book.items())
+        reviews = db.execute('''select review, rating from reviews 
+                                where isbn_id=:isbn''',
+                            {"isbn":isbn}).fetchall()
+        print(reviews)
+        if reviews:
+            counter = 0;
+            sum = 0;
+            for review in reviews:
+                counter += 1
+                sum += review['rating']
+            avg = sum / counter
+            book_api['review_count'] = counter
+            book_api['average_score'] = float(f'{avg:.1f}')
+        else:
+            book_api['review_count'] = 0
+            # book_api['average_score'] = '-'
+        return jsonify(book_api), 200, {'Content-Type': 'application/json'}
+    else:
+         abort(404)
+
 
 @app.route('/add/<string:isbn>', methods=['POST'])
 def add(isbn):

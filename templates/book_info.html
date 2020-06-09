@@ -66,9 +66,11 @@
     <div class="alert alert-primary border text-center" role="alert">
       No reviews found in BookRack
     </div>
-    <button  id="add-review" class="btn btn-primary center-x mb-3">Add Review</button>
   {% endif %}
 </div> <!-- info-container -->
+<button  id="add-review" class="btn btn-primary center-x mt-3 mb-3 hide-block"
+    data-has-review="{{this_has_review}}">Add Review
+</button>
 <div class="rev-add-container">
   <form class="form-boot hide-form" id="form-add-review" 
     action="{{url_for('add', isbn=book['isbn'])}}" method="post">
