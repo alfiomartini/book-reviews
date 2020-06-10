@@ -5,6 +5,43 @@ import urllib.parse
 from flask import redirect, render_template, request, session
 from functools import wraps
 import requests
+from database import db
+
+def check_user(reviews):
+    print(session['username'])
+    for review in reviews:
+        print(review['name'])
+        if review['name'] == session['username']:
+            return 'yes'
+    return 'no'
+
+def search_reviews():
+    user_reviews = {}
+    books_list = []
+    books = db.execute('''select name, isbn, title, author,year, review, rating 
+                        from users, books, reviews
+                        where users.id=reviews.user_id and reviews.isbn_id = 
+                        books.isbn and  users.id=:user_id''',
+                        {"user_id":session['user_id']}).fetchall()
+    if books:
+        for book in books:
+            book_dict = dict(book.items())
+            print(book['isbn'])
+            book_dict['tooltip'] = 'ISBN: ' + book['isbn'] \
+                                + '\n' + "Title : " + book['title']\
+                                + '\n' + 'Author : ' + book['author']\
+                                + '\n' + 'Year : ' + str(book['year'])\
+                                + '\n' + 'Rating : ' + str(book['rating'])\
+                                # + '\n' + 'Review : ' + book['review']
+            books_list.append(book_dict)
+        user_reviews['found'] = True
+        user_reviews['books'] = books_list
+    else:
+        user_reviews['books'] = books
+        user_reviews['found'] = False
+
+    return user_reviews
+
         
 def api_book(book, isbn):
     GOODREADS_KEY = 'wKy3eEHxspfhDj5YJ5POHw'

@@ -1,12 +1,11 @@
 import os
 from helpers import apology, login_required, shorten_title
-from helpers import api_book
+from helpers import api_book, check_user, search_reviews
 from flask import Flask, session, url_for, redirect, flash
 from flask import render_template, request, jsonify, abort
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
+from database import db
 
 app = Flask(__name__)
 
@@ -19,44 +18,6 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# set up database s
-engine = create_engine(os.getenv("DATABASE_URL"))
-db = scoped_session(sessionmaker(bind=engine))
-
-def check_user(reviews):
-    print(session['username'])
-    for review in reviews:
-        print(review['name'])
-        if review['name'] == session['username']:
-            return 'yes'
-    return 'no'
-
-def search_reviews():
-    user_reviews = {}
-    books_list = []
-    books = db.execute('''select name, isbn, title, author,year, review, rating 
-                        from users, books, reviews
-                        where users.id=reviews.user_id and reviews.isbn_id = 
-                        books.isbn and  users.id=:user_id''',
-                        {"user_id":session['user_id']}).fetchall()
-    if books:
-        for book in books:
-            book_dict = dict(book.items())
-            print(book['isbn'])
-            book_dict['tooltip'] = 'ISBN: ' + book['isbn'] \
-                                + '\n' + "Title : " + book['title']\
-                                + '\n' + 'Author : ' + book['author']\
-                                + '\n' + 'Year : ' + str(book['year'])\
-                                + '\n' + 'Rating : ' + str(book['rating'])\
-                                # + '\n' + 'Review : ' + book['review']
-            books_list.append(book_dict)
-        user_reviews['found'] = True
-        user_reviews['books'] = books_list
-    else:
-        user_reviews['books'] = books
-        user_reviews['found'] = False
-
-    return user_reviews
 
 # Ensure responses aren't cached
 # hard refresh: ctrl+f5 (Windows), ctrl+shift+r(Linux, Mac)
