@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form class="form-boot" action="{{url_for('login')}}" method="post">
+    <form class="form-boot" action="{{url_for('auth_bp.login')}}" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" 
             name="username" placeholder="Username" type="text" required>
