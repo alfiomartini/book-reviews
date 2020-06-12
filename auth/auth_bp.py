@@ -71,8 +71,9 @@ def register():
             db.execute('insert into users(name, password) values(:name,:password)', 
                            {"name":name, "password":hash_passw})
             db.commit()
-            # flash("You are registered.")
-            return redirect('/login')
+            flash(f"User {name} is registered.")
+            return render_template('index.html')
+            # return redirect('/')
     else:
         return render_template('register.html')
 

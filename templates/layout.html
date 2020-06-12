@@ -34,7 +34,7 @@
     <body>
 
         <nav class="navbar navbar-expand-md  navbar-dark bg-dark border m-3">
-            <a class="navbar-brand" href="/">BookRack</a>
+            <a class="navbar-brand" href="/"><span class="color-brand">BookRack</span></a>
             <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" 
                  class="navbar-toggler" data-target="#navbar" data-toggle="collapse" 
                  type="button">
@@ -59,31 +59,37 @@
                         <li class="nav-item"><a class="nav-link" 
                             href="{{url_for('edit_bp.edit')}}" 
                             data-toggle='tooltip' title="Edit Reviews" 
-                            data-placement='bottom'>Edit</a></li>
+                            data-placement='bottom'>
+                            <span class="color-navbar">Edit</span></a></li>
                         <li class = "nav-item "> 
                             <a  class="nav-link"  
                                 href="{{url_for('remove_bp.remove')}}"
                                 data-toggle="tooltip" title="Remove Reviews"
-                                data-placement='bottom'>Remove</a>
+                                data-placement='bottom'>
+                                <span class="color-navbar">Remove</span></a>
                         </li>
                         <li class="nav-item"><a class="nav-link" 
                             href="{{url_for('auth_bp.password')}}"
                             data-toggle='tooltip' title="Change Password" 
-                            data-placement='bottom'>Password</a>
+                            data-placement='bottom'>
+                            <span class="color-navbar">Password</span></a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" 
-                            href="{{url_for('auth_bp.logout')}}">Log Out</a></li>
+                            href="{{url_for('auth_bp.logout')}}">
+                            <span class = 'color-navbar'>Log Out</span></a></li>
                     </ul>
                     <script src="/static/tooltip_init.js" defer></script>
                     <script src="/static/search.js" defer></script> 
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" 
-                            href="{{url_for('auth_bp.register')}}">Register</a></li>
+                            href="{{url_for('auth_bp.register')}}">
+                            <span class="color-auth">Register</span></a></li>
                         <li class="nav-item"><a class="nav-link" 
-                            href="{{url_for('auth_bp.login')}}">Log In</a></li>
+                            href="{{url_for('auth_bp.login')}}">
+                            <span class="color-auth">Log In</span></a></li>
                     </ul>
                 {% endif %}
             </div>
