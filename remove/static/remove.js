@@ -12,6 +12,8 @@ function remove(anchor){
   book_data[1].innerHTML = author;
   book_data[2].innerHTML = year;
   book_data[3].innerHTML = isbn;
+  book_data[4].innerHTML = rating;
+  book_data[5].innerHTML = review;
 
   let book_list = document.getElementById('book-list');
   $("[data-toggle='tooltip']").tooltip('hide');
