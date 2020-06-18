@@ -24,22 +24,22 @@ def check():
 @login_required
 def search(term):
     term = term.lower()
-
     try:
         year = int(term)
     except:
         year = None;
 
     term = "%" + term + "%" 
+    print(term)
     
     if year:
         sql_search = '''select  isbn, title, author, year from books 
-                            where  isbn like :term or lower(title) like :term or 
+                            where  lower(isbn) like :term or lower(title) like :term or 
                             lower(author) like :term or year = :year 
                             order by title'''
     else:
         sql_search = '''select  isbn, title, author, year from books 
-                            where  isbn like :term or lower(title) like :term or 
+                            where  lower(isbn) like :term or lower(title) like :term or 
                             lower(author) like :term
                             order by title'''
     books = db.execute(sql_search, {"term":term, "year":year}).fetchall()

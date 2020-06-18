@@ -23,11 +23,12 @@ def remove():
 @remove_bp.route("/remove_review", methods=['POST'])
 @login_required
 def remove_review():
-    isbn_id = request.form.get('isbn')
-    user_id = session['user_id']
-    db.execute('''delete from reviews 
-                  where user_id =:user_id and isbn_id =:isbn_id''',
-                  {"isbn_id":isbn_id, "user_id":user_id})
-    db.commit()
-    flash(f'Review and rating for book with isbn : {isbn_id} removed.')
-    return redirect('/')
+    if request.method == 'POST':
+        isbn_id = request.form.get('isbn')
+        user_id = session['user_id']
+        db.execute('''delete from reviews 
+                    where user_id =:user_id and isbn_id =:isbn_id''',
+                    {"isbn_id":isbn_id, "user_id":user_id})
+        db.commit()
+        flash(f'Review and rating for book with isbn : {isbn_id} removed.')
+        return redirect('/')

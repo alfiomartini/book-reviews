@@ -22,11 +22,11 @@ def login_required(f):
         return f(*args, **kwargs)
     return wrapper
 
-def check_user(reviews):
-    print(session['username'])
-    for review in reviews:
-        print(review['name'])
-        if review['name'] == session['username']:
+def check_user(reviews_isbn):
+    for review in reviews_isbn:
+        # check if this user has already a review for this book
+        if review['id'] == session['user_id']:
+            print(review)
             return 'yes'
     return 'no'
 

@@ -12,9 +12,9 @@ def books(isbn):
     # query database to get book data
     book = db.execute('select * from books where isbn = :isbn', {"isbn":isbn}).fetchone()
      
-    # query goodreads api for average rating and number of ratings
+    # query goodreads apis(goodreads, bookrack) for average rating and number of ratings
     book_data = api_book(book, isbn)
-    reviews = db.execute('''select name, review, rating from 
+    reviews = db.execute('''select id, isbn_id, name, review, rating from 
                             users 
                               join 
                             (select user_id, isbn_id, review, rating 
@@ -25,6 +25,7 @@ def books(isbn):
     # print(reviews)
     rack_data = {}
     this_has_review = check_user(reviews);
+    print(this_has_review)
     if reviews:
         counter = 0;
         sum = 0;
@@ -39,12 +40,13 @@ def books(isbn):
 
 @books_bp.route('/add/<string:isbn>', methods=['POST'])
 def add(isbn):
-    rating = int(request.form.get('rating'))
-    review = request.form.get('review')
-    db.execute('''insert into reviews(isbn_id,user_id,review,rating)
-                  values(:isbn,:user_id,:review,:rating)''',
-                  {"isbn":isbn,"user_id":session['user_id'],
-                   "review":review,"rating":rating})
-    db.commit()
-    flash(f'Added review for book with isbn {isbn}')
-    return redirect('/')
+    if request.method == 'POST':
+        rating = int(request.form.get('rating'))
+        review = request.form.get('review')
+        db.execute('''insert into reviews(isbn_id,user_id,review,rating)
+                    values(:isbn,:user_id,:review,:rating)''',
+                    {"isbn":isbn,"user_id":session['user_id'],
+                    "review":review,"rating":rating})
+        db.commit()
+        flash(f'Added review for book with isbn {isbn}')
+        return redirect('/')
