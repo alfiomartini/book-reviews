@@ -1,6 +1,7 @@
 passwords.txt
 experiments/
 __pycache__/
+postgres/
 video/
 flask_session/
 .pylintrc
