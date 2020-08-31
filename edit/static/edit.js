@@ -16,8 +16,8 @@ function edit(anchor){
   $("[data-toggle='tooltip']").tooltip('hide');
   book_list.innerHTML='';
    
-  const alert = document.querySelector('.alert');
-  alert.innerHTML = 'You can change both input fields and then submit it.'
+  // const alert = document.querySelector('.alert');
+  // alert.innerHTML = 'You can change both input fields and then submit it.'
 
   const form = document.getElementById('form-add-review');
   const edit_container = document.querySelector('.edit-container');
@@ -33,6 +33,7 @@ function edit(anchor){
   edit_container.classList.add('show-block');
   form.classList.remove('hide-block');
   form.classList.add('show-block');
-  edit_container.style.marginTop = "-40px";
+  input_rating.focus();
+  // edit_container.style.marginTop = "-40px";
 
 }

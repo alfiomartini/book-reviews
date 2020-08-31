@@ -29,6 +29,6 @@ function remove(anchor){
   edit_container.classList.add('show-block');
   form.classList.remove('hide-block');
   form.classList.add('show-block');
-  edit_container.style.marginTop = "-40px";
+  // edit_container.style.marginTop = "-40px";
 
 }

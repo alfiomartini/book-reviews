@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block main %}
-<div class="d-flex flex-wrap justify-content-around" id="book-list">
-  <div class="mr-2 border border-light">
+<div class="" id="book-list">
+  <div class="alert alert-primary border text-center" role="alert">
+        Select one of the books to delete your review.
+  </div>
+  <div class="border border-light">
       <ul class='books m-2'>
           {% for book in books %}
               {% set book_info = book['title'] + ' : ' + book['author']%}
@@ -40,8 +43,7 @@
       </li>
     </ul>
   </div>
-</div>
-<form class="form-boot mt-3 hide-block" id="form-add-review" 
+  <form class="form-boot mt-3 hide-block" id="form-add-review" 
     action="/edit_review" method="post">
     <div class="form-group">
         <label for="rating"> Rating </label>
@@ -56,6 +58,7 @@
     <input class = "btn btn-primary" type="submit" value="Submit">
     <input type="text" name = "isbn" value="" hidden>
 </form>
+</div>
 
 
 {% endblock %}

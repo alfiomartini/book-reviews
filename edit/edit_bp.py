@@ -12,7 +12,7 @@ edit_bp = Blueprint('edit_bp', __name__, template_folder='templates',
 def edit():
     user_reviews = search_reviews()
     if user_reviews['found']:
-        flash('Select one of the books to edit your review.')
+        # flash('Select one of the books to edit your review.')
         return render_template('edit.html', books=user_reviews['books'])
     else:
         message = 'No book reviews found for this user.'
