@@ -48,13 +48,18 @@ body{
   /* z-index: -1; */
 }
 
+.flashed .alert{
+  font-variant: small-caps;
+  font-size: 17px;
+}
+
 /* Forms in register.html and login.html */
 
-.form-boot{
+/* .form-boot{
   width: 70%;
   margin:auto;
   text-align: center;
-}
+} */
 
 .form-group label{
   color:lightsteelblue;
