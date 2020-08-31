@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Edit Reviews
+    Remove Reviews
 {% endblock %}
 
 {% block main %}
-<div class="d-flex flex-wrap justify-content-around" id="book-list">
-  <div class="mr-2 border border-light">
-      <ul class='books m-2'>
+<div class="" id="book-list">
+  <div class="border border-light">
+      <ul class='books'>
           {% for book in books %}
               {% set book_info = book['title'] + ' : ' + book['author']%}
               <li><a href="javascript:" data-toggle='tooltip'

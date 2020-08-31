@@ -1,14 +1,17 @@
-<div class="d-flex flex-wrap justify-content-around">
-  <div class="mb-3 mr-2 border border-light">
-      <ul class='books m-2'>
-          {% for book in books %}
-              {% set book_info = book['title'] + ' : ' + book['author']%}
-              <li><a href="{{url_for('books_bp.books', isbn=book['isbn'])}}" data-toggle='tooltip'
-                  title="{{book['tooltip']}}" data-placement='right'
-                  data-html='true'>
-                  {{book_info}}</a>
-              </li>
-          {% endfor %}
-      </ul>
-  </div> <!-- end bookitem -->
-</div> <!-- end flexbox-->
+{% if books %}
+<div class="alert alert-primary border text-center" role="alert">
+    Select from the list below 
+</div>
+{% endif %}
+<div class="border border-light">
+    <ul class='books m-2'>
+        {% for book in books %}
+            {% set book_info = book['title'] + ' : ' + book['author']%}
+            <li><a href="{{url_for('books_bp.books', isbn=book['isbn'])}}" data-toggle='tooltip'
+                title="{{book['tooltip']}}" data-placement='right'
+                data-html='true'>
+                {{book_info}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div> <!-- end bookitem -->
