@@ -70,9 +70,9 @@ body{
 
 /* search.html */
 
-#search{
-  width: 40%;
-  margin:auto;
+#search, #book-list{
+  width: 50%;
+  margin:50px auto;
 }
 
 .books{
@@ -101,13 +101,20 @@ body{
   padding-left: 2px;
 }
 /* Smaller devices  */
-@media (max-width:768px){
+@media (max-width:500px){
   .books li a {
     font-size: 0.9rem;
   }
-  #search{
+  #search, #book-list{
+    margin-top: 30px;
     width: 90%;
     margin:auto;
+  }
+   
+  .flashed .alert,
+  .alert{
+    font-variant: small-caps;
+    font-size: 14px;
   }
 }
 

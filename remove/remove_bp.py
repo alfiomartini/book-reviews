@@ -13,7 +13,7 @@ remove_bp = Blueprint('remove_bp', __name__, template_folder='templates',
 def remove():
     user_reviews = search_reviews()
     if user_reviews['found']:
-        flash('Select one of the books to delete your review.')
+        # flash('Select one of the books to delete your review.')
         return render_template('remove.html', books=user_reviews['books'])
     else:
         message = 'No book reviews found for this user.'
