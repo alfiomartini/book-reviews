@@ -26,7 +26,7 @@
   </div> <!-- end bookitem -->
 </div> <!-- end flexbox-->
 
-<div class="edit-container hide-block">
+<div class="edit-container hide-block mt-5">
   <div class="book-container border border-light">
     <ul>
       <li><span class="book-item">Title:</span> 
@@ -50,14 +50,12 @@
       </li>
     </ul>
   </div>
-</div>
-<form class="form-boot mt-3 hide-block" id="form-add-review" 
+  <form class="form-boot mt-3 hide-block" id="form-add-review" 
     action="/remove_review" method="post">
     <input class = "btn btn-primary" type="submit" value="Delete">
     <input type="text" name = "isbn" value="" hidden>
-</form>
-
-
+  </form>
+</div>
 {% endblock %}
 
 {% block scripts %}

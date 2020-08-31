@@ -100,11 +100,14 @@ body{
   content: '\232a';
   padding-left: 2px;
 }
+
 /* Smaller devices  */
+
 @media (max-width:500px){
   .books li a {
     font-size: 0.9rem;
   }
+
   #search, #book-list{
     margin-top: 30px;
     width: 90%;
@@ -190,6 +193,12 @@ body{
   width:70%;
   margin:auto;
   font-size: 16px;
+}
+
+@media (max-width:500px){
+  .edit-container{
+    width:90%;
+  }
 }
 /* Utilities */
 

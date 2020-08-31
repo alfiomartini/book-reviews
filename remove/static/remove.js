@@ -18,10 +18,7 @@ function remove(anchor){
   let book_list = document.getElementById('book-list');
   $("[data-toggle='tooltip']").tooltip('hide');
   book_list.innerHTML='';
-   
-  const alert = document.querySelector('.alert');
-  alert.innerHTML = 'Click on delete to remove your review from this book.'
-
+  
   const form = document.getElementById('form-add-review');
   const edit_container = document.querySelector('.edit-container');
   const input_isbn = document.querySelector('input[name="isbn"]');
