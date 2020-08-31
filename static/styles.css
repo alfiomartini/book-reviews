@@ -6,6 +6,13 @@
 body{
   font-family: Arial, Helvetica, sans-serif;
   background-color: black ;
+
+  background-image: url('/static/images/stefan-steinbauer-unsplash-minecratf-min-1400-900.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
 }
 
 /* tables and bigger devices */
