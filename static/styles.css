@@ -30,6 +30,14 @@ body{
   background-color: #330033 !important;
 }
 
+.navbar .dropdown-menu{
+  background-color: #330033 !important ;
+}
+
+.navbar .dropdown-menu a:hover{
+  color: black !important;
+}
+
 .color-brand{
   color:lightyellow;
 }
