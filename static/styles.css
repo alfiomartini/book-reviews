@@ -28,6 +28,7 @@ body{
   position: sticky;
   top: 5px;
   background-color: #330033 !important;
+  z-index: 10;
 }
 
 .navbar .dropdown-menu{
