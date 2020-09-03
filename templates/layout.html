@@ -34,7 +34,7 @@
     <body>
 
         <nav class="navbar navbar-expand-md  navbar-dark bg-dark border m-3">
-            <a class="navbar-brand" href="/"><span class="color-brand">BookRack</span></a>
+            <a class="navbar-brand" href="/"><span class="color-brand">Book Reviews</span></a>
             <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" 
                  class="navbar-toggler" data-target="#navbar" data-toggle="collapse" 
                  type="button">
@@ -56,7 +56,26 @@
                         returning false simply says to the browser that the button has not been clicked -->
                     </form>
                     <ul class="navbar-nav mr-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" 
+                        <li class = "nav-item dropdown"> 
+                            <a  class="nav-link dropdown-toggle"  href="#"
+                                id="navbardrop" data-toggle="dropdown"> 
+                                <span data-toggle='tooltip' title="Bookmark Actions" data-placement='bottom'>
+                                    <span class="color-navbar">Reviews</span>
+                                </span></a>
+                            </a>
+                            <div class="dropdown-menu"> 
+                                <a class="dropdown-item text-white" href="{{url_for('edit_bp.edit')}}" 
+                                 data-toggle='tooltip' title="Edit Reviews" 
+                                 data-placement='bottom'>
+                                <span class="">Edit</span></a>
+                                <a  class="dropdown-item text-white"  href="{{url_for('remove_bp.remove')}}"
+                                data-toggle="tooltip" title="Remove Reviews"
+                                data-placement='bottom'>
+                                <span class="">Remove</span></a>
+                            </div>
+                        </li>
+                        <!-- <li class="nav-item">
+                           <a class="nav-link" 
                             href="{{url_for('edit_bp.edit')}}" 
                             data-toggle='tooltip' title="Edit Reviews" 
                             data-placement='bottom'>
@@ -67,7 +86,7 @@
                                 data-toggle="tooltip" title="Remove Reviews"
                                 data-placement='bottom'>
                                 <span class="color-navbar">Remove</span></a>
-                        </li>
+                        </li> -->
                         <li class="nav-item"><a class="nav-link" 
                             href="{{url_for('auth_bp.password')}}"
                             data-toggle='tooltip' title="Change Password" 
@@ -83,7 +102,7 @@
                             </a>
                             <div class="dropdown-menu"> 
                                 <a class="dropdown-item text-white">
-                                    BookRack (Flask App)
+                                    Book Reviews (Flask App)
                                 </a>
                                 <a class="dropdown-item text-white">
                                     August, 2020
