@@ -15,12 +15,7 @@ body{
   height: 100vh;
 }
 
-/* tables and bigger devices */
-@media (min-width:768px){
-  body{
-    font-size: 1.15rem;
-  }
-}
+
 
 /* Stycky Elements: Navbar and Flashed Container */
 
@@ -89,8 +84,8 @@ body{
   margin: 0;
   padding: 0px 5px 8px 5px;
   /* background-color: #330033; */
-  background-color: #000000;
-  background-image: linear-gradient(315deg, #000000 0%, #414141 74%);
+  background-color: #7f5a83;
+  background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
 }
 
 .books li a{
@@ -112,25 +107,6 @@ body{
   padding-left: 2px;
 }
 
-/* Smaller devices  */
-
-@media (max-width:500px){
-  .books li a {
-    font-size: 0.9rem;
-  }
-
-  #search, #book-list{
-    margin-top: 30px;
-    width: 90%;
-    margin:auto;
-  }
-   
-  .flashed .alert,
-  .alert{
-    font-variant: small-caps;
-    font-size: 14px;
-  }
-}
 
 .books li a:hover{
   color:black;
@@ -207,18 +183,9 @@ body{
 }
 
 .edit-container .form-boot{
-  width: 100%;
+  width: 100%; /* of its container */
 }
-@media (max-width:500px){
-  .edit-container{
-    width:90%;
-  }
 
-  .form-boot{
-      width: 90%;
-      margin:auto;
-  }
-}
 /* Utilities */
 
 .hide-block{
@@ -259,3 +226,48 @@ body{
   white-space: pre-wrap;
   text-align: justify;
 } 
+
+/* Media Queries */
+
+
+@media (min-width:1024px){
+  body{
+    font-size: 1.15rem;
+  }
+
+  #search, #book-list{
+    margin-top: 30px;
+    width: 70%;
+    margin:auto;
+  }
+}
+
+
+@media (max-width:600px){
+  .books li a {
+    font-size: 0.9rem;
+  }
+
+  #search, #book-list{
+    margin-top: 30px;
+    width: 90%;
+    margin:auto;
+  }
+   
+  .flashed .alert,
+  .alert{
+    font-variant: small-caps;
+    font-size: 14px;
+  }
+}
+
+@media (max-width:600px){
+  .edit-container{
+    width:90%;
+  }
+
+  .form-boot{
+      width: 90%;
+      margin:auto;
+  }
+}
