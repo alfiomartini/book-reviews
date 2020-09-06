@@ -230,7 +230,7 @@ body{
 /* Media Queries */
 
 
-@media (min-width:1024px){
+@media (max-width:1024px){
   body{
     font-size: 1.15rem;
   }
