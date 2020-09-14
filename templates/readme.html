@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %} Readme {% endblock %}
+
+{% block main %}
+<div class="readme-wrapper">
+  <div class="readme">
+    <p>This is a book review website  where users are able to search for books, leave reviews for individual books, and see the reviews made by other people.  The application also uses a third-party API by <em>Goodreads</em>, another book review website, to pull in ratings from a broader audience. The application also supports editing and deleting of user reviews.  It also supports an external API,  <code>/api/&lt;isbn&gt;</code>, which returns a JSON response if the book is found in the database.  It  is developed  with <em>HTML</em>, <em>CSS</em>, <em>JavaScript</em>, <em>jQuery</em>, <em>Bootstrap</em>, <em>Python</em>,  <em>Flask</em> and the <em>PostgreSQL</em> database. It is a extended version of a prior implementation for a Harvard's CS50Web project.   You can find it live <a href="https://bkreviews.herokuapp.com/">here</a>.</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.querySelector('input').addEventListener('keyup', () => {
+    let readme = document.querySelector('.readme');
+    readme.innerHTML = '';
+    readme.style.padding = '0';
+    readme.style.margin = '0';
+  })
+</script>
+{% endblock %}

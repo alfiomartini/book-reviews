@@ -55,5 +55,10 @@ def after_request(response):
 def index():
     return render_template('index.html')
 
+@app.route('/readme')
+@login_required
+def readme():
+    return render_template('readme.html')
+
 if __name__ == '__main__':
     app.run(debug=False)

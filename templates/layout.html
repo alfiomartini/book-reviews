@@ -74,19 +74,6 @@
                                 <span class="">Remove</span></a>
                             </div>
                         </li>
-                        <!-- <li class="nav-item">
-                           <a class="nav-link" 
-                            href="{{url_for('edit_bp.edit')}}" 
-                            data-toggle='tooltip' title="Edit Reviews" 
-                            data-placement='bottom'>
-                            <span class="color-navbar">Edit</span></a></li>
-                        <li class = "nav-item "> 
-                            <a  class="nav-link"  
-                                href="{{url_for('remove_bp.remove')}}"
-                                data-toggle="tooltip" title="Remove Reviews"
-                                data-placement='bottom'>
-                                <span class="color-navbar">Remove</span></a>
-                        </li> -->
                         <li class="nav-item"><a class="nav-link" 
                             href="{{url_for('auth_bp.password')}}"
                             data-toggle='tooltip' title="Change Password" 
@@ -96,20 +83,18 @@
                         <li class = "nav-item dropdown"> 
                             <a  class="nav-link dropdown-toggle"  href="#"
                                 id="navbardrop" data-toggle="dropdown"> 
-                                <span data-toggle='tooltip' title="Bookmark Actions" data-placement='bottom'>
+                                <span data-toggle='tooltip' title="Code/Readme" 
+                                     data-placement='bottom'>
                                     <span class="color-navbar">About</span>
                                 </span></a>
                             </a>
                             <div class="dropdown-menu"> 
-                                <a class="dropdown-item text-white">
-                                    Book Reviews (Flask App)
+                                <a class="dropdown-item text-white" 
+                                   href="https://github.com/alfiomartini/book-reviews" target="_blank">
+                                   Github
                                 </a>
-                                <a class="dropdown-item text-white">
-                                    August, 2020
-                                </a>
-                                <a class="dropdown-item text-white">
-                                    alfio.martini@gmail.com
-                                </a>
+                                <a class="dropdown-item text-white" href="/readme">Readme</a>
+                                <a class="dropdown-item text-white" href="mailto: alfio.martini@gmail.com">Email</a>
                             </div>
                         </li>
                     </ul>
