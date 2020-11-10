@@ -13,10 +13,18 @@ function listeners(){
   input.addEventListener('paste', search_clean);
 
   function search_clean(){
-    info_elm.style.display = 'none';
-    add_container.style.display = 'none';
-    add_review.style.display = 'none';
-    alert.style.display = 'none';
+    if (info_elm){
+      info_elm.style.display = 'none';
+    }
+    if (add_container){
+      add_container.style.display = 'none';
+    }
+    if (add_review){
+      add_review.style.display = 'none';
+    }
+    if (alert) {
+      alert.style.display = 'none';
+    };
     // remove event listeners
     input.removeEventListener('change', search_clean);
     input.removeEventListener('keyup', search_clean);
